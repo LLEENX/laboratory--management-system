@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Dosen;
 use App\Http\Controllers\Mahasiswa;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,12 @@ use App\Http\Controllers\Mahasiswa;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+// Route Login
+
+Route::post('/login', [AuthController::class, 'store'])->name('login.store');
+
+// Route Home
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -56,4 +63,8 @@ Route::middleware(['auth', 'is.mahasiswa'])->prefix('mahasiswa')->group(function
     Route::resource('/peminjaman', Mahasiswa\PeminjamanController::class)->only(['index', 'create', 'store', 'show']);
     
     // Tambahkan rute mahasiswa lainnya di sini
+});
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
 });

@@ -15,6 +15,10 @@ class IsDosen
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if (auth()->check() && auth()->user()->role === 'dosen') {
+            return $next($request);
+        }
+
+        abort(403, 'Unauthorized access - Dosen only.');
     }
 }
