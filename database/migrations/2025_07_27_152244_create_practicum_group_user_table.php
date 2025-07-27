@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('practicum_group_user', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('role', ['admin', 'dosen', 'mahasiswa']);
+            $table->foreignId('practicum_group_id')->constrained('practicum_groups');
+            $table->foreignId('user_id')->constrained('users'); // constraint mahasiswa
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('practicum_group_user');
     }
 };

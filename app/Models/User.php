@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function practicumGroups()
     {
-        return $this->belongsToMany(PraticeumGroup::class);
+        return $this->belongsToMany(PracticumGroup::class);
     }
 
     public function isMahasiswa()
