@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -42,4 +43,36 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function borrowals()
+    {
+        return $this->hasMany(Borrowal::class);
+    }
+
+    public function modules()
+    {
+        return $this->hasMany(Module::class);
+    }
+
+    public function practicumGroups()
+    {
+        return $this->belongsToMany(PraticeumGroup::class);
+    }
+
+    public function isMahasiswa()
+    {
+        return $this->role === 'mahasiswa';
+    }
+
+    public function isDosen()
+    {
+        return $this->role === 'dosen';
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+
 }
