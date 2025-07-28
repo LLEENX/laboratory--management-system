@@ -1,34 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Sistem Inventaris')</title>
-
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS (jika ada) -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-</head>
-<body>
-    <!-- Navbar -->
-    @include('partials.navbar')
-
-    <!-- Content -->
-    <main class="container py-4">
-        @yield('content')
-    </main>
-
-    <!-- Footer -->
-    @include('partials.footer')
-
-    <!-- Bootstrap JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html> --}}
-
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -49,17 +18,6 @@
                     <span class="fs-4">LabSistem</span>
                 </a>
                 <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                    {{-- Navigasi Dinamis Sesuai Peran --}}
-                    @if(Auth::user()->role == 'admin')
-                        @include('layouts.partials.nav-admin')
-                    @elseif(Auth::user()->role == 'dosen')
-                        @include('layouts.partials.nav-dosen')
-                    @elseif(Auth::user()->role == 'mahasiswa')
-                        @include('layouts.partials.nav-mahasiswa')
-                    @endif
-                </ul>
-                <hr>
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle fs-4 me-2"></i>
@@ -76,9 +34,19 @@
                         </li>
                     </ul>
                 </div>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    {{-- Navigasi Dinamis Sesuai Peran --}}
+                    @if(Auth::user()->role == 'admin')
+                        @include('layouts.partials.nav-admin')
+                    @elseif(Auth::user()->role == 'dosen')
+                        @include('layouts.partials.nav-dosen')
+                    @elseif(Auth::user()->role == 'mahasiswa')
+                        @include('layouts.partials.nav-mahasiswa')
+                    @endif
+                </ul>
             </div>
         @endauth
-
         <main class="w-100 p-4">
             @yield('content')
         </main>

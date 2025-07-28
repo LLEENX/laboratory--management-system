@@ -15,7 +15,7 @@
     </a>
 </li>
 <li>
-    <a href="#" class="nav-link text-white">
-        <i class="bi bi-cloud-arrow-down me-2"></i> Download Modul
+    <a href="{{ route('mahasiswa.modul.index') }}" class="nav-link text-white">
+        <i class="bi bi-download me-2"></i> Download Modul
     </a>
 </li>
