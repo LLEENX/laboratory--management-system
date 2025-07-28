@@ -12,6 +12,8 @@ use App\Http\Controllers\Mahasiswa\JadwalController as MahasiswaJadwalController
 use App\Http\Controllers\Mahasiswa\PeminjamanController as MahasiswaPeminjamanController;
 use App\Http\Controllers\Mahasiswa\ModulController as MahasiswaModulController;
 use App\Http\Controllers\Dosen\DashboardController as DosenDashboardController;
+use App\Http\Controllers\Dosen\JadwalController as DosenJadwalController;
+use App\Http\Controllers\Dosen\ModulController as DosenModulController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -63,11 +65,13 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
 
 // Route Dosen
 
-Route::middleware(['auth', 'is.dosen'])->prefix('dosen')->group(function () {
-    Route::get('/dashboard', [DosenDashboardController::class, 'index'])->name('dosen.dashboard');
-    // Route::resource('/modul', Dosen\ModulController::class);
+Route::middleware(['auth', 'is.dosen'])->prefix('dosen')->name('dosen.')->group(function () {
+    Route::get('/dashboard', [DosenDashboardController::class, 'index'])->name('dashboard');
     
-    // Tambahkan rute dosen lainnya di sini
+    Route::get('/jadwal', [DosenJadwalController::class, 'index'])->name('jadwal.index');
+    
+    Route::resource('/modul', DosenModulController::class);
+    
 });
 
 

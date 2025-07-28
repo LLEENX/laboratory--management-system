@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Module;
 
 class ModulController extends Controller
 {
@@ -12,7 +14,8 @@ class ModulController extends Controller
      */
     public function index()
     {
-        //
+        $modules = Module::where('user_id', Auth::id())->latest()->get();
+        return view('dosen.modul.index', compact('modules'));
     }
 
     /**
@@ -20,7 +23,7 @@ class ModulController extends Controller
      */
     public function create()
     {
-        //
+        return view('dosen.modul.create');
     }
 
     /**
@@ -28,7 +31,23 @@ class ModulController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'file_modul' => 'required|file|mimes:pdf,doc,docx|max:10240', // max 10MB
+        ]);
+
+        // Simpan file
+        $path = $request->file('file_modul')->store('modul', 'public');
+
+        Module::create([
+            'user_id' => Auth::id(),
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'file_path' => $path,
+        ]);
+
+        return redirect()->route('dosen.modul.index')->with('success', 'Modul berhasil diunggah.');
     }
 
     /**
