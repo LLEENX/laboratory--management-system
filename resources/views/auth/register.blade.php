@@ -8,7 +8,12 @@
         <div class="col-md-5">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <h3 class="text-center mb-4">Registrasi</h3>
+                    <div class="register-header">
+                        <div class="icon">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+                        <h2 class="text-center mb-4">Registrasi</h3>
+                    </div>
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -25,35 +30,35 @@
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="name" name="name" 
-                                   value="{{ old('name') }}" required autofocus>
+                                   value="{{ old('name') }}"  placeholder="" required autofocus>
                             <label for="name">Nama Lengkap</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
-                                   value="{{ old('nomor_induk') }}" required>
+                                   value="{{ old('nomor_induk') }}" placeholder="" required>
                             <label for="nomor_induk">Nomor Induk (NIM/NIDN)</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="email" name="email"
-                                   value="{{ old('email') }}" required>
+                                   value="{{ old('email') }}" placeholder="" required>
                             <label for="email">Email</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="" required>
                             <label for="password">Password</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="" required>
                             <label for="password_confirmation">Konfirmasi Password</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="role" name="role" required>
-                                <option value="" disabled selected>Pilih Role</option>
+                            <select class="form-select" id="role" name="role" placeholder="" required>
+                                <option value="" disabled selected>Anda Sebagai</option>
                                 <option value="mahasiswa">Mahasiswa</option>
                                 <option value="dosen">Dosen</option>
                             </select>

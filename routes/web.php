@@ -68,7 +68,7 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
 Route::middleware(['auth', 'is.dosen'])->prefix('dosen')->name('dosen.')->group(function () {
     Route::get('/dashboard', [DosenDashboardController::class, 'index'])->name('dashboard');
     
-    Route::get('/jadwal', [DosenJadwalController::class, 'index'])->name('jadwal.index');
+    Route::resource('/jadwal', DosenJadwalController::class);
     
     Route::resource('/modul', DosenModulController::class);
     

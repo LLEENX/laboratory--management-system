@@ -1,0 +1,70 @@
+body {
+    background: #f0f2f5;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+ }
+
+    /* Kotak login utama */
+.login-container {
+    padding: 40px 30px;
+    max-width: 400px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+ }
+
+
+.login-header .icon {
+    font-size: 48px;
+    color: #0d6efd;
+    margin-bottom: 1rem;
+}
+
+.login-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.login-header p {
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+    /* Form */
+.form-floating label {
+    color: #6c757d;
+}
+
+.form-control:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-primary {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.register-header .icon {
+    font-size: 48px;
+    color: #0d6efd;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.register-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
