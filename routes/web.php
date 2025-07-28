@@ -24,7 +24,15 @@ use App\Http\Controllers\AuthController;
 
 // Route Login
 
+Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('login.store');
+
+
+// Route Register
+
+Route::get('/register', [AuthController::class, 'create'])->name('register');
+Route::post('/register', [AuthController::class, 'storeRegister'])->name('register.store');
+
 
 // Route Home
 
