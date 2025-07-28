@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Equipment;
 
 class InventarisController extends Controller
 {
@@ -12,7 +13,10 @@ class InventarisController extends Controller
      */
     public function index()
     {
-        //
+        $equipment = Equipment::latest()->get(); 
+
+        // Kirim data ke view
+        return view('admin.inventaris.index', compact('equipment'));
     }
 
     /**
@@ -20,7 +24,7 @@ class InventarisController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.inventaris.create');
     }
 
     /**
@@ -28,7 +32,20 @@ class InventarisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'nama'   => 'required|string|max:255',
+            'kode'   => 'required|string|max:50|unique:equipments,kode',
+            'jumlah' => 'required|integer|min:0',
+            'lokasi' => 'required|string|max:255',
+            'status' => 'required|string',
+        ]);
+
+        Equipment::create($request->all());
+
+        return redirect()->route('admin.inventaris.index')
+                         ->with('success', 'Alat baru berhasil ditambahkan!');
+
+
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Borrowal;
 
 class PeminjamanController extends Controller
 {
@@ -12,54 +13,20 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        //
+        $borrowals = Borrowal::with(['user', 'equipment'])->latest()->get();
+
+        return view('admin.peminjaman.index', compact('borrowals'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    
+    public function approve(Borrowal $borrowal)
     {
-        //
+        // Update status peminjaman menjadi 'Disetujui'
+        $borrowal->update(['status' => 'Disetujui']);
+
+        // Kembali ke halaman daftar peminjaman dengan pesan sukses
+        return redirect()->route('admin.peminjaman.index')
+                         ->with('success', 'Peminjaman berhasil disetujui.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

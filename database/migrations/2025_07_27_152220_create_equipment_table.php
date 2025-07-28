@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('kode')->unique();
             $table->integer('jumlah');
             $table->string('lokasi');
-            $table->enum('status', ['tersedia', 'rusak', 'dipinjam'])->default('tersedia');
+            $table->enum('status', ['tersedia', 'rusak', 'dipinjam', 'menunggu persetujuan'])->default('tersedia');
             $table->timestamps();
         });
     }

@@ -48,6 +48,22 @@
 @section('title', 'Login')
 
 @section('content')
+
+@if(session('success'))
+    <div class="alert alert-success" id="flash-success">
+        {{ session('success') }}
+    </div>
+
+    <script>
+        setTimeout(function() {
+            const flash = document.getElementById('flash-success');
+            if (flash) {
+                flash.style.display = 'none';
+            }
+        }, 3000); // 3 detik
+    </script>
+@endif
+
 <style>
     /* Latar belakang halaman */
     body {
@@ -115,7 +131,7 @@
 
     @if ($errors->any())
         <div class="alert alert-danger text-start py-2">
-            Login Gagal. Periksa kembali email dan password Anda.
+            Login gagal. Nomor Induk atau Password salah.
         </div>
     @endif
 
@@ -130,6 +146,10 @@
             <label for="password">Password</label>
         </div>
         <button class="w-100 btn btn-primary" type="submit">Login</button>
+
+        <div class="text-center mt-3">
+            Belum punya akun? <a href="{{ route('register') }}">Registrasi di sini</a>
+        </div>
     </form>
 </div>
 @endsection

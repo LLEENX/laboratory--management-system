@@ -1,50 +1,74 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('title', 'Register')
 
 @section('content')
-<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg p-4" style="width: 100%; max-width: 450px; border-radius: 1rem;">
-        <h4 class="text-center mb-4">Buat Akun Baru</h4>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Registrasi</h3>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-            <div class="mb-3">
-                <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                       id="name" name="name" value="{{ old('name') }}" required>
-                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" name="name" 
+                                   value="{{ old('name') }}" required autofocus>
+                            <label for="name">Nama Lengkap</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
+                                   value="{{ old('nomor_induk') }}" required>
+                            <label for="nomor_induk">Nomor Induk (NIM/NIDN)</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" name="email"
+                                   value="{{ old('email') }}" required>
+                            <label for="email">Email</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <label for="password">Password</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <label for="password_confirmation">Konfirmasi Password</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="" disabled selected>Pilih Role</option>
+                                <option value="mahasiswa">Mahasiswa</option>
+                                <option value="dosen">Dosen</option>
+                            </select>
+                            <label for="role">Role</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2">Register</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a>
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label">Alamat Email</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                       id="email" name="email" value="{{ old('email') }}" required>
-                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="password" class="form-label">Kata Sandi</label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror"
-                       id="password" name="password" required>
-                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="password_confirmation" class="form-label">Konfirmasi Sandi</label>
-                <input type="password" class="form-control" id="password_confirmation"
-                       name="password_confirmation" required>
-            </div>
-
-            <div class="d-grid mb-3">
-                <button type="submit" class="btn btn-success">Daftar</button>
-            </div>
-
-            <div class="text-center">
-                <small>Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a></small>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 @endsection

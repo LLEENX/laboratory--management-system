@@ -2,9 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin;
-use App\Http\Controllers\Dosen;
-use App\Http\Controllers\Mahasiswa;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\InventarisController;
+use App\Http\Controllers\Admin\PeminjamanController;
+use App\Http\Controllers\Admin\JadwalController;
+use App\Http\Controllers\Admin\PenggunaController;
+use App\Http\Controllers\Mahasiswa\DashboardController as MahasiswaDashboardController;
+use App\Http\Controllers\Mahasiswa\JadwalController as MahasiswaJadwalController;
+use App\Http\Controllers\Mahasiswa\PeminjamanController as MahasiswaPeminjamanController;
+use App\Http\Controllers\Mahasiswa\ModulController as MahasiswaModulController;
+use App\Http\Controllers\Dosen\DashboardController as DosenDashboardController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -23,31 +30,32 @@ use App\Http\Controllers\AuthController;
 // });
 
 // Route Login
-
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('login.store');
 
 
 // Route Register
-
 Route::get('/register', [AuthController::class, 'create'])->name('register');
 Route::post('/register', [AuthController::class, 'storeRegister'])->name('register.store');
 
 
 // Route Home
-
 Route::get('/', [HomeController::class, 'index']);
+
+
+// Route Logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Route Admin
 
-Route::middleware(['auth', 'is.admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::resource('/inventaris', Admin\InventarisController::class);
-    Route::resource('/jadwal', Admin\JadwalController::class);
-
-    Route::get('/peminjaman', [Admin\PeminjamanController::class, 'index'])->name('admin.peminjaman.index');
-    Route::post('/peminjaman/{borrowal}/approve', [Admin\PeminjamanController::class, 'approve'])->name('admin.peminjaman.approve');
+Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('/inventaris', InventarisController::class);
+    Route::resource('/users', PenggunaController::class);
+    Route::resource('/jadwal', JadwalController::class);
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+    Route::post('/peminjaman/{borrowal}/approve', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
     
     // Tambahkan rute admin lainnya di sini
 });
@@ -56,8 +64,8 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->group(function () {
 // Route Dosen
 
 Route::middleware(['auth', 'is.dosen'])->prefix('dosen')->group(function () {
-    Route::get('/dashboard', [Dosen\DashboardController::class, 'index'])->name('dosen.dashboard');
-    Route::resource('/modul', Dosen\ModulController::class);
+    Route::get('/dashboard', [DosenDashboardController::class, 'index'])->name('dosen.dashboard');
+    // Route::resource('/modul', Dosen\ModulController::class);
     
     // Tambahkan rute dosen lainnya di sini
 });
@@ -65,12 +73,15 @@ Route::middleware(['auth', 'is.dosen'])->prefix('dosen')->group(function () {
 
 // Route Mahasiswa
 
-Route::middleware(['auth', 'is.mahasiswa'])->prefix('mahasiswa')->group(function () {
-    Route::get('/dashboard', [Mahasiswa\DashboardController::class, 'index'])->name('mahasiswa.dashboard');
-    Route::get('/jadwal', [Mahasiswa\JadwalController::class, 'index'])->name('mahasiswa.jadwal');
-    Route::resource('/peminjaman', Mahasiswa\PeminjamanController::class)->only(['index', 'create', 'store', 'show']);
+Route::middleware(['auth', 'is.mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::get('/dashboard', [MahasiswaDashboardController::class, 'index'])->name('dashboard');
     
-    // Tambahkan rute mahasiswa lainnya di sini
+    Route::get('/jadwal', [MahasiswaJadwalController::class, 'index'])->name('jadwal.index');
+
+    Route::resource('/peminjaman', MahasiswaPeminjamanController::class)->only(['index', 'create', 'store']);
+    
+    Route::get('/modul', [MahasiswaModulController::class, 'index'])->name('modul.index');
+    Route::get('/modul/{module}/download', [MahasiswaModulController::class, 'download'])->name('modul.download');
 });
 
 Route::fallback(function () {
